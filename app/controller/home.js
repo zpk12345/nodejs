@@ -48,8 +48,13 @@ class HomeController extends Controller {
     console.log(ctx.validateParams.id);
     ctx.body = ctx.validateParams.id;
   }
+
   async login() {
-    
+    const { ctx, app, config } = this;
+    const url = ctx.query.url || '/';
+    if (url !== '/' && ctx.request.host !== Url.parse(url).host) {
+      return ctx.redirect(url);
+    }
   }
 }
 
